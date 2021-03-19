@@ -1,0 +1,33 @@
+<html>
+  <head>
+    <title></title>
+  </head>
+  <body>
+    <form id="form">
+      名前:<input type="text" id="name" /> 年齢:<input type="number" id="age" />
+      <input type="submit" value="送信" />
+    </form>
+    <p></p>
+  </body>
+  <script type="text/javascript">
+    const form = document.getElementById("form");
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const name = document.getElementById("name").value;
+      const age = document.getElementById("age").value;
+      try {
+        const res = await fetch("http://localhost:8080/", {
+          method: "POST",
+          mode: "cors",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name, age }),
+        });
+        const data = await res.json();
+        const p = document.querySelector("p");
+        p.textContent = `名前：${data.Name}、年齢：${data.Age}`;
+      } catch (e) {
+        console.error(e);
+      }
+    });
+  </script>
+</html>
