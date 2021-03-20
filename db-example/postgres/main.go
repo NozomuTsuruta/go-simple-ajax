@@ -8,7 +8,7 @@ import (
 	_ "github.com/lib/pq"
 )
 
-func main()  {
+func main() {
 	db, err := sql.Open("postgres", "user=root password=secret dbname=go-postgres sslmode=disable")
 	checkError(err)
 
@@ -28,7 +28,7 @@ func main()  {
 	stmt, err = db.Prepare("UPDATE userinfo SET username=$1 WHERE uid=$2")
 	checkError(err)
 
-	res,err = stmt.Exec("nozomuupdate", 1)
+	res, err = stmt.Exec("nozomuupdate", 1)
 	checkError(err)
 
 	affect, err := res.RowsAffected()
@@ -42,15 +42,15 @@ func main()  {
 
 	for rows.Next() {
 		var uid int
-        var username string
-        var department string
-        var created time.Time
-        err = rows.Scan(&uid, &username, &department, &created)
-        checkError(err)
-        fmt.Println(uid)
-        fmt.Println(username)
-        fmt.Println(department)
-        fmt.Println(created)
+		var username string
+		var department string
+		var created time.Time
+		err = rows.Scan(&uid, &username, &department, &created)
+		checkError(err)
+		fmt.Println(uid)
+		fmt.Println(username)
+		fmt.Println(department)
+		fmt.Println(created)
 	}
 
 	// 削除
@@ -68,7 +68,7 @@ func main()  {
 	db.Close()
 }
 
-func checkError(err error)  {
+func checkError(err error) {
 	if err != nil {
 		panic(err)
 	}

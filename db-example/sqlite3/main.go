@@ -3,16 +3,16 @@ package main
 import (
 	"database/sql"
 	"fmt"
-	"time"
 	_ "github.com/mattn/go-sqlite3"
+	"time"
 )
 
-func main()  {
+func main() {
 	db, err := sql.Open("sqlite3", "./foo.db")
 	checkError(err)
 
 	// 挿入
-	stmt, err := db.Prepare("INSERT userinfo SET username=?,departname=?,created=?")
+	stmt, err := db.Prepare("INSERT INTO userinfo(username, departname, created) values(?,?,?)")
 	checkError(err)
 	res, err := stmt.Exec("nozomu", "アルバイト", "2020-08-01")
 	checkError(err)
@@ -26,7 +26,7 @@ func main()  {
 	stmt, err = db.Prepare("UPDATE userinfo SET username=? WHERE uid=?")
 	checkError(err)
 
-	res,err = stmt.Exec("nozomuupdate", id)
+	res, err = stmt.Exec("nozomuupdate", id)
 	checkError(err)
 
 	affect, err := res.RowsAffected()
@@ -40,15 +40,15 @@ func main()  {
 
 	for rows.Next() {
 		var uid int
-        var username string
-        var department string
-        var created time.Time
-        err = rows.Scan(&uid, &username, &department, &created)
-        checkError(err)
-        fmt.Println(uid)
-        fmt.Println(username)
-        fmt.Println(department)
-        fmt.Println(created)
+		var username string
+		var department string
+		var created time.Time
+		err = rows.Scan(&uid, &username, &department, &created)
+		checkError(err)
+		fmt.Println(uid)
+		fmt.Println(username)
+		fmt.Println(department)
+		fmt.Println(created)
 	}
 
 	// 削除
@@ -66,7 +66,7 @@ func main()  {
 	db.Close()
 }
 
-func checkError(err error)  {
+func checkError(err error) {
 	if err != nil {
 		panic(err)
 	}

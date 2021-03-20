@@ -8,7 +8,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
-func main()  {
+func main() {
 	db, err := sql.Open("mysql", "root:secret@/go-mysql?charset=utf8") // user:password@/(tcp)dbname?charset=utf8
 	checkError(err)
 
@@ -27,7 +27,7 @@ func main()  {
 	stmt, err = db.Prepare("UPDATE userinfo SET username=? WHERE uid=?")
 	checkError(err)
 
-	res,err = stmt.Exec("nozomuupdate", id)
+	res, err = stmt.Exec("nozomuupdate", id)
 	checkError(err)
 
 	affect, err := res.RowsAffected()
@@ -41,15 +41,15 @@ func main()  {
 
 	for rows.Next() {
 		var uid int
-        var username string
-        var department string
-        var created time.Time
-        err = rows.Scan(&uid, &username, &department, &created)
-        checkError(err)
-        fmt.Println(uid)
-        fmt.Println(username)
-        fmt.Println(department)
-        fmt.Println(created)
+		var username string
+		var department string
+		var created time.Time
+		err = rows.Scan(&uid, &username, &department, &created)
+		checkError(err)
+		fmt.Println(uid)
+		fmt.Println(username)
+		fmt.Println(department)
+		fmt.Println(created)
 	}
 
 	// 削除
@@ -67,7 +67,7 @@ func main()  {
 	db.Close()
 }
 
-func checkError(err error)  {
+func checkError(err error) {
 	if err != nil {
 		panic(err)
 	}
